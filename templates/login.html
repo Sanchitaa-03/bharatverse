@@ -27,7 +27,10 @@
     <div class="demo-login-box">
       <span class="demo-login-label">Classroom demo</span>
       <p>Try the student journey with a ready-made account.</p>
-      <button type="submit" form="studentDemoForm" class="btn btn-secondary btn-full">🎒 Try Student Demo</button>
+      <div class="auth-inline-actions">
+        <button type="submit" form="studentDemoForm" class="btn btn-secondary btn-full">🎒 Try Student Demo</button>
+        <a href="{{ url_for('map.civilization_map', realm_key='indus_valley') }}" class="btn btn-primary btn-full">🗺️ Open Civilization Map</a>
+      </div>
       <form method="POST" action="{{ url_for('auth.login') }}" id="studentDemoForm">
         <input type="hidden" name="demo_login" value="student">
       </form>

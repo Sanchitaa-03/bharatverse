@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 760" role="img" aria-label="Indus Valley civilization map background">
+  <defs>
+    <filter id="paper" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 0.08"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+
+  <rect width="1100" height="760" fill="#f1efe9"/>
+  <rect width="1100" height="760" fill="#f7f4ee" opacity="0.94" filter="url(#paper)"/>
+
+  <g opacity="0.94">
+    <path d="M0 120 C180 70, 250 90, 370 120 L520 110 L700 140 L860 235 L930 330 L1040 420 L1020 620 L850 730 L640 760 L430 710 L220 700 L80 610 L30 490 Z" fill="#e5e0d7"/>
+    <path d="M180 170 L320 120 L470 135 L640 160 L800 220 L875 290 L910 370 L860 470 L785 555 L690 615 L555 655 L440 670 L300 640 L215 570 L185 465 L160 330 Z" fill="#f1e8dc"/>
+    <path d="M310 225 L420 185 L555 200 L670 235 L760 300 L740 390 L655 470 L560 520 L445 540 L350 505 L285 435 L290 330 Z" fill="#e8b580" opacity="0.9"/>
+    <path d="M475 255 L545 270 L610 290 L645 340 L625 405 L555 438 L500 415 L470 355 Z" fill="#d9a06a" opacity="0.9"/>
+  </g>
+
+  <g stroke="#d0c5b9" stroke-width="2" opacity="0.9" fill="none">
+    <path d="M130 140 C240 180, 320 130, 430 158 S610 220, 760 248"/>
+    <path d="M160 540 C290 500, 360 520, 520 500 S720 500, 840 470"/>
+  </g>
+</svg>

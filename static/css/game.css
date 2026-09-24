@@ -73,12 +73,38 @@
 .scroll-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
 
 /* ---------- Map ---------- */
+.map-page { position: relative; }
+.map-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+.map-header-row .btn { white-space: nowrap; }
 .map-layout { display: grid; grid-template-columns: minmax(165px, 0.25fr) minmax(0, 1fr); gap: 18px; align-items: start; }
-.map-container { min-width: 0; background: rgba(255, 245, 230, 0.72); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 10px; backdrop-filter: blur(8px); }
-.map-svg { width: 100%; height: auto; border-radius: 10px; }
-.marker-dot { fill: var(--clay); stroke: #fff; stroke-width: 0.5; cursor: pointer; transition: r 0.15s; }
-.marker-dot:hover { fill: var(--gold); r: 3.2; }
-.marker-label { font-size: 3px; fill: var(--ink); text-anchor: middle; pointer-events: none; }
+.map-container {
+  min-width: 0;
+  background: rgba(255, 245, 230, 0.12);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 10px;
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+}
+.map-svg {
+  width: 100%;
+  height: auto;
+  min-height: 420px;
+  border-radius: 10px;
+  background: url("../images/harappan-map-bg.svg") center / cover no-repeat;
+  display: block;
+}
+.marker-dot { fill: var(--clay); stroke: #fff; stroke-width: 0.55; cursor: pointer; transition: transform 0.15s ease; }
+.marker-dot:hover { fill: var(--gold); transform: scale(1.12); }
+.marker-label {
+  font-size: 3.4px;
+  fill: #2a2d35;
+  font-weight: 700;
+  text-anchor: middle;
+  pointer-events: none;
+  font-family: Georgia, 'Times New Roman', serif;
+}
 .map-legend { padding: 18px 16px; border: 1px solid var(--border); border-left: 4px solid var(--teal); border-radius: var(--radius); background: rgba(255, 245, 230, 0.72); box-shadow: var(--shadow); backdrop-filter: blur(8px); }
 .map-legend h2 { margin: 0 0 16px; color: var(--teal-dark); font: 1.15rem var(--font-heading); }
 .legend-item { display: flex; align-items: flex-start; gap: 10px; margin-top: 14px; color: var(--ink); font-size: 0.82rem; line-height: 1.25; }

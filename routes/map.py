@@ -15,10 +15,8 @@ def civilization_map(realm_key):
         flash("That realm does not exist.", "error")
         return redirect(url_for("realms.realm_selection"))
 
-    # The map unlocks once the realm's levels are all completed.
-    if realm["status"] == "active" and not models.is_realm_completed(user_id, realm["id"]):
-        flash("Complete every level of this realm to unlock the Civilization Map!", "error")
-        return redirect(url_for("realms.level_selection", realm_key=realm_key))
-
+    # The map is available for exploration as soon as the realm is active.
+    # Students can open it from the dashboard and continue learning even before
+    # finishing every level, while the level flow still remains intact.
     sites = models.get_sites_for_realm(realm["id"])
     return render_template("map.html", realm=realm, sites=sites)

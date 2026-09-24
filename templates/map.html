@@ -4,8 +4,13 @@
 
 {% block content %}
 <section class="map-page">
-  <h1 class="page-title">🗺️ Civilization Map</h1>
-  <p class="page-subtitle">{{ realm['name'] }} &middot; Click a marker to learn about a real archaeological site.</p>
+  <div class="map-header-row">
+    <div>
+      <h1 class="page-title">🗺️ Civilization Map</h1>
+      <p class="page-subtitle">{{ realm['name'] }} &middot; Click a marker to learn about a real archaeological site.</p>
+    </div>
+    <a href="{{ url_for('realms.level_selection', realm_key=realm['key']) }}" class="btn btn-secondary">🏺 Back to Journey</a>
+  </div>
 
   <div class="map-layout">
     <aside class="map-legend" aria-label="Map key">
@@ -22,13 +27,13 @@
 
     <div class="map-container">
       <svg viewBox="0 0 100 100" class="map-svg" id="mapSvg" role="img" aria-label="Archaeological sites map">
-        <rect x="0" y="0" width="100" height="100" fill="var(--map-bg, #f0e6d2)" rx="2"/>
+        <rect x="0" y="0" width="100" height="100" fill="transparent" rx="2"/>
         {% for site in sites %}
         <g class="map-marker" data-name="{{ site['name'] }}" data-region="{{ site['region'] }}"
            data-importance="{{ site['importance'] }}" data-fact="{{ site['fact'] }}"
            transform="translate({{ site['x'] }},{{ site['y'] }})">
-          <circle r="2.5" class="marker-dot"></circle>
-          <text x="0" y="-3.5" class="marker-label">{{ site['name'] }}</text>
+          <path d="M0,-5 L2.6,-2.2 L2.6,2.7 L0,5.5 L-2.6,2.7 L-2.6,-2.2 Z M0,5.5 L0,9.5 M0,5.5 L-1.2,8.2 M0,5.5 L1.2,8.2" class="marker-dot"></path>
+          <text x="0" y="-7.8" class="marker-label">{{ site['name'] }}</text>
         </g>
         {% endfor %}
       </svg>
