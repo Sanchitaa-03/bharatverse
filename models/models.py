@@ -13,8 +13,9 @@ import sqlite3
 import os
 import json
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DB_PATH = os.path.join(BASE_DIR, "database", "bharatverse.db")
+from config import Config
+
+DB_PATH = Config.DATABASE_PATH
 
 
 def get_db():

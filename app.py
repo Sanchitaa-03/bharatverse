@@ -15,7 +15,7 @@ This file mainly WIRES THINGS TOGETHER:
 """
 
 import os
-from flask import Flask, render_template, session, redirect, url_for
+from flask import Flask, render_template, session, redirect, url_for, send_from_directory
 
 from config import Config
 from database.init_db import initialize_database, ensure_student_demo_account, DB_PATH
@@ -55,6 +55,10 @@ def create_app():
         if "user_id" in session:
             return redirect(url_for("dashboard.dashboard"))
         return render_template("index.html", realms=models.get_all_realms())
+
+    @app.route("/image.png")
+    def brand_logo():
+        return send_from_directory(os.path.dirname(os.path.abspath(__file__)), "image.png")
 
     @app.errorhandler(404)
     def not_found(e):

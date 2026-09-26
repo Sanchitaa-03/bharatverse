@@ -22,7 +22,7 @@ This README covers everything from "I've never used Flask" to
 8. [Testing Checklist](#8-testing-checklist)
 9. [Common Errors & Fixes](#9-common-errors--fixes)
 10. [Git & GitHub](#10-git--github)
-11. [Deployment (Render)](#11-deployment-render)
+11. [Deployment (Vercel)](#11-deployment-vercel)
 12. [Future Scalability](#12-future-scalability)
 13. [SIH Presentation Support](#13-sih-presentation-support)
 
@@ -56,7 +56,7 @@ for why, and how to add them later without rewriting the game engine.
 | Backend | Python + **Flask** |
 | Database | **SQLite** (a database stored in a single file, no server needed) |
 | Auth | Flask sessions + Werkzeug password hashing |
-| Deployment | Render |
+| Deployment | Vercel (serverless Flask function) |
 
 **Glossary** (terms used throughout this project):
 
@@ -350,29 +350,29 @@ or any API keys/secrets.
 
 ---
 
-## 11. Deployment (Render)
+## 11. Deployment (Vercel)
 
-1. Push your project to GitHub (see above).
-2. Go to https://render.com and sign up / log in.
-3. Click **New → Web Service**, connect your GitHub repo.
-4. Configure:
-   - **Build Command:** `pip install -r requirements.txt`
-   - **Start Command:** `gunicorn app:app` (add `gunicorn` to `requirements.txt`
-     for production, since Flask's built-in server isn't meant for real traffic)
-   - **Environment Variable:** set `SECRET_KEY` to a random long string
-     (Render lets you set this in the dashboard — don't hard-code it in your repo)
-5. Click **Create Web Service**. Render will build and deploy automatically.
-6. Once deployed, open the given `*.onrender.com` URL and re-run the testing
-   checklist against the live site.
+The repository includes `vercel.json` and `api/index.py`, so Vercel can run
+the Flask app as a Python serverless function.
 
-**Important SQLite note:** Render's free-tier filesystem is *ephemeral* —
-files written while the app runs (like `bharatverse.db`) can be wiped on
-redeploy or restart. This is fine for a hackathon demo, but for a real
-production launch, plan to migrate to a persistent database such as
-**PostgreSQL** (Render offers a free PostgreSQL instance you can connect to
-later — the `models.py` layer was written with plain SQL so this swap is
-straightforward). Keep SQLite for local development; it's simple and needs
-zero setup.
+1. Push the repository to GitHub. Do not commit `venv/`, `.env`, or a real
+   SQLite database.
+2. Go to https://vercel.com, choose **Add New → Project**, and import the
+   GitHub repository.
+3. Keep the detected framework as **Other**. Vercel will install the packages
+   from `requirements.txt` and use `api/index.py` as the entry point.
+4. Add this environment variable in the Vercel project settings:
+   - `SECRET_KEY`: a long random value, different from local development.
+5. Deploy, then test `/`, `/login`, `/register`, `/dashboard`, `/profile`,
+   `/leaderboard`, and one playable level.
+
+**Important SQLite note:** Vercel's serverless filesystem is ephemeral and
+read-only except for `/tmp`. The deployed app automatically uses
+`/tmp/bharatverse.db`, which prevents write errors and is suitable for a demo,
+but user accounts and progress can be lost when the function is recreated.
+For persistent production data, set `DATABASE_PATH` only when using a mounted
+database volume, or migrate the model layer to a hosted database such as
+PostgreSQL. Do not put a production SQLite file in the repository.
 
 ---
 

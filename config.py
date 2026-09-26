@@ -14,9 +14,10 @@ local development/hackathon demos.
 import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DEFAULT_DATABASE_PATH = "/tmp/bharatverse.db" if os.environ.get("VERCEL") else os.path.join(BASE_DIR, "database", "bharatverse.db")
 
 
 class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY", "bharatverse-dev-secret-change-in-production")
-    DATABASE_PATH = os.path.join(BASE_DIR, "database", "bharatverse.db")
-    DEBUG = os.environ.get("FLASK_DEBUG", "1") == "1"
+    DATABASE_PATH = os.environ.get("DATABASE_PATH", DEFAULT_DATABASE_PATH)
+    DEBUG = os.environ.get("FLASK_DEBUG", "0") == "1"

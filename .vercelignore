@@ -1,0 +1,7 @@
+venv/
+__pycache__/
+*.pyc
+database/bharatverse.db
+.env
+.git/
+.vscode/

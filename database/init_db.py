@@ -12,15 +12,23 @@ needs to survive between visits - like user accounts and game progress.
 SQLite stores the whole database in a single file: bharatverse.db
 """
 
-import sqlite3
+
 import json
 import os
+import sqlite3
+
 
 # Figure out where this script lives, so paths work no matter where
 # you run the script from.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DB_PATH = os.path.join(BASE_DIR, "database", "bharatverse.db")
 DATA_DIR = os.path.join(BASE_DIR, "data")
+
+# Vercel's filesystem is read-only except /tmp. DATABASE_PATH can override
+# this for local testing or a mounted persistent volume.
+DB_PATH = os.environ.get(
+    "DATABASE_PATH",
+    "/tmp/bharatverse.db" if os.environ.get("VERCEL") else os.path.join(BASE_DIR, "database", "bharatverse.db"),
+)
 
 
 SCHEMA = """

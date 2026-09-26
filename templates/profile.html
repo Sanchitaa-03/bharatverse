@@ -1,37 +1,52 @@
 {% extends "base.html" %}
 {% block title %}Profile — {{ user['username'] }}{% endblock %}
+{% block body_class %} profile-shell{% endblock %}
 
 {% block content %}
-<section class="profile-page">
-  <div class="profile-header">
-    <div class="profile-avatar">🧑‍🎓</div>
-    <h1>{{ user['username'] }}</h1>
-    <p class="rank-badge">{{ rank }}</p>
-  </div>
+<section class="profile-dashboard">
+  <aside class="profile-sidebar" aria-label="Profile navigation">
+    <a class="profile-brand" href="{{ url_for('index') }}"><img class="profile-brand-logo" src="{{ url_for('brand_logo') }}" alt="BharatVerse logo"><span><strong>Bharat</strong><em>Verse</em><small>EXPLORE THROUGH TIME</small></span></a>
+    <nav class="profile-nav">
+      <a href="{{ url_for('dashboard.dashboard') }}"><span>⌂</span>Home</a>
+      <a href="{{ url_for('realms.realm_selection') }}"><span>⌕</span>Explore</a>
+      <a class="is-active" href="{{ url_for('leaderboard.profile') }}"><span>▥</span>My Progress</a>
+      <a href="{{ url_for('leaderboard.hall_of_legends') }}"><span>▤</span>Collection</a>
+      <a href="#profile-settings"><span>⚙</span>Settings</a>
+    </nav>
+    <div class="profile-sidebar-footer"><span class="sidebar-figure">♙</span><p>Small steps.<br><strong>Big discoveries.</strong></p></div>
+  </aside>
 
-  <div class="stats-grid">
-    <div class="stat-card"><span class="stat-icon">📚</span><span class="stat-value">{{ stats['knowledge_xp'] if stats else 0 }}</span><span class="stat-label">Knowledge XP</span></div>
-    <div class="stat-card"><span class="stat-icon">🏛️</span><span class="stat-value">{{ score }}</span><span class="stat-label">Civilization Score</span></div>
-    <div class="stat-card"><span class="stat-icon">💧</span><span class="stat-value">{{ stats['water'] if stats else 0 }}</span><span class="stat-label">Water Mgmt</span></div>
-    <div class="stat-card"><span class="stat-icon">🌾</span><span class="stat-value">{{ stats['food'] if stats else 0 }}</span><span class="stat-label">Food Security</span></div>
-  </div>
+  <div class="profile-workspace">
+    <div class="profile-scenic-strip" role="img" aria-label="Historical cityscape of the Indus Valley"></div>
+    <div class="profile-workspace-body">
+      <header class="profile-topbar"><span class="profile-breadcrumb">MY PROGRESS / PROFILE</span><div class="profile-top-actions"><span class="topbar-token">✦</span><span class="topbar-avatar">{{ user['username'][0]|upper }}</span></div></header>
 
-  <h3>🏆 Achievements</h3>
-  <div class="badge-list">
-    {% for a in achievements %}
-      <div class="badge-item" title="{{ a['description'] }}"><span>{{ a['icon'] }}</span>{{ a['name'] }}</div>
-    {% else %}
-      <p class="empty-hint">No achievements yet.</p>
-    {% endfor %}
-  </div>
+      <div class="profile-layout">
+        <main class="profile-main-column">
+          <section class="profile-identity-card">
+            <div class="profile-avatar-frame"><img class="profile-avatar" src="https://commons.wikimedia.org/wiki/Special:FilePath/Mohenjo-daro.jpg" alt="Historical view of Mohenjo-daro"><span class="profile-avatar-seal">𓂀</span></div>
+            <div class="profile-identity"><p class="profile-kicker">History explorer · Dreamer · Builder</p><h1>{{ user['username'] }}</h1><p class="profile-quote">“Not just a player, but a part of history.”</p><strong class="profile-level">Level 2 <span>—</span> Explorer</strong><div class="profile-level-bar"><i style="width: {{ [stats['knowledge_xp'] if stats else 0, 100]|min }}%"></i></div><small class="profile-level-text">{{ stats['knowledge_xp'] if stats else 0 }} / 200 XP</small><button class="profile-edit-button" type="button">✎ Edit Profile</button></div>
+          </section>
 
-  <h3>🏺 Treasures</h3>
-  <div class="badge-list">
-    {% for t in treasures %}
-      <div class="badge-item" title="{{ t['description'] }}"><span>{{ t['icon'] }}</span>{{ t['name'] }}</div>
-    {% else %}
-      <p class="empty-hint">No treasures yet.</p>
-    {% endfor %}
+          <section class="profile-collection-panel">
+            <div class="profile-tabs"><span class="is-active">▤ &nbsp;Collection</span><span>♜ &nbsp;Achievements</span><span>◷ &nbsp;Activity</span></div>
+            <div class="profile-panel-heading"><div><p class="profile-kicker">Your discoveries</p><h2>History Cards</h2><p>Collect cards as you complete missions and explore different eras.</p></div><a href="{{ url_for('realms.realm_selection') }}">View All →</a></div>
+            <div class="history-card-grid">
+              {% for t in treasures[:3] %}<article class="history-card"><div class="history-card-art history-art-{{ loop.index }}"><span>{{ t['icon'] }}</span></div><h3>{{ t['name'] }}</h3><small>{{ t['description'] }}</small><b class="card-rarity">{{ 'Rare' if loop.index == 3 else 'Common' }}</b></article>{% else %}<article class="history-card"><div class="history-card-art history-art-1"><span>🏺</span></div><h3>Indus Valley</h3><small>Urban planning</small><b class="card-rarity">Common</b></article>{% endfor %}
+              <article class="history-card is-locked"><div class="history-card-lock">▣</div><small>More cards<br>coming soon...</small></article><article class="history-card is-locked"><div class="history-card-lock">▣</div><small>More cards<br>coming soon...</small></article>
+            </div>
+            <div class="profile-activity"><div class="profile-panel-heading compact"><h2>Recent Activity</h2><a href="#activity">View All →</a></div><div class="activity-row"><span class="activity-icon">🏛</span><div><strong>Completed mission: Mohenjo-daro — City Before the Monsoon</strong><small>Earned 50 XP · Unlocked Indus Valley Urban Planning card</small></div><time>Today</time></div><div class="activity-row"><span class="activity-icon">✦</span><div><strong>Reached Level 2</strong><small>Keep exploring!</small></div><time>Today</time></div><div class="activity-row"><span class="activity-icon">🏆</span><div><strong>{{ achievements[0]['name'] if achievements else 'First Steps' }}</strong><small>Keep building your historical record.</small></div><time>Recent</time></div></div>
+          </section>
+        </main>
+
+        <aside class="profile-right-column">
+          <section class="profile-metrics"><div><span>✦</span><small>Total XP</small><strong>{{ stats['knowledge_xp'] if stats else 0 }}</strong></div><div><span>♟</span><small>Cultural Coins</small><strong>{{ (stats['knowledge_xp'] if stats else 0) * 2 + 6 }}</strong></div><div><span>◉</span><small>History Cards</small><strong>{{ treasures|length }} / 20</strong></div><div><span>♜</span><small>Achievements</small><strong>{{ achievements|length }}</strong></div></section>
+          <section class="profile-achievements"><div class="profile-panel-heading compact"><h2>♜ Your Achievements</h2><a href="#achievements">View All →</a></div><div class="achievement-orbs">{% for a in achievements[:3] %}<div><span>{{ a['icon'] }}</span><strong>{{ a['name'] }}</strong><small>Milestone reached</small></div>{% else %}<div><span>✦</span><strong>First Steps</strong><small>Begin your journey</small></div><div><span>◈</span><strong>Curious Mind</strong><small>Explore 5 cards</small></div><div><span>♜</span><strong>Strategist</strong><small>Make a smart decision</small></div>{% endfor %}</div><div class="achievement-locks"><span>▣</span><span>▣</span><span>▣</span></div></section>
+          <section class="profile-mission"><div class="mission-art"></div><span>Indus Valley</span><h2>Mohenjo-daro — City Before the Monsoon</h2><p>Expand your city and prepare for the next monsoon.</p><a href="{{ url_for('realms.realm_selection') }}">Continue Mission →</a></section>
+          <section class="profile-motto"><strong>Every decision shapes history...</strong><span>⌁</span></section>
+        </aside>
+      </div>
+    </div>
   </div>
 </section>
 {% endblock %}
